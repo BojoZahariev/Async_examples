@@ -40,3 +40,11 @@ function addOne(thenRunThisFunction) {
 }
 
 addOne(function thisGetsRunAfterAddOneFinishes() {});
+
+var fs = require('fs');
+fs.readFile('movie.mp4', finishedReading);
+
+function finishedReading(error, movieData) {
+  if (error) return console.error(error);
+  // do something with the movieData
+}
