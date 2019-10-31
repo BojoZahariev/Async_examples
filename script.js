@@ -31,3 +31,12 @@ function logMyNumber() {
 }
 
 addOne(logMyNumber);
+
+//pseudocode version of the above example:
+function addOne(thenRunThisFunction) {
+  waitAMinuteAsync(function waitedAMinute() {
+    thenRunThisFunction();
+  });
+}
+
+addOne(function thisGetsRunAfterAddOneFinishes() {});
