@@ -149,3 +149,54 @@ Promise.race([req1, req2]).then(function(one) {
 
 // From the console:
 // Then: Second!
+
+//PROMISES
+
+function add(xPromise,yPromise) {
+	// `Promise.all([ .. ])` takes an array of promises,
+	// and returns a new promise that waits on them
+	// all to finish
+	return Promise.all( [xPromise, yPromise] )
+
+	// when that promise is resolved, let's take the
+	// received `X` and `Y` values and add them together.
+	.then( function(values){
+		// `values` is an array of the messages from the
+		// previously resolved promises
+		return values[0] + values[1];
+	} );
+}
+
+// `fetchX()` and `fetchY()` return promises for
+// their respective values, which may be ready
+// *now* or *later*.
+add( fetchX(), fetchY() )
+
+// we get a promise back for the sum of those
+// two numbers.
+// now we chain-call `then(..)` to wait for the
+// resolution of that returned promise.
+.then( function(sum){
+	console.log( sum ); // that was easier!
+} );
+
+//Completion Event
+
+function foo(x) {
+	// start doing something that could take a while
+
+	// make a `listener` event notification
+	// capability to return
+
+	return listener;
+}
+
+var evt = foo( 42 );
+
+evt.on( "completion", function(){
+	// now we can do the next step!
+} );
+
+evt.on( "failure", function(err){
+	// oops, something went wrong in `foo(..)`
+} );
