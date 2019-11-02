@@ -281,3 +281,56 @@ let promise = new Promise(function(resolve, reject) {
 	reject(new Error("…")); // ignored
 	setTimeout(() => resolve("…")); // ignored
 });
+
+//Consumers: then, catch, finally
+
+//then
+promise.then(
+	function(result) { /* handle a successful result */ },
+	function(error) { /* handle an error */ }
+);
+
+////////
+let promise = new Promise(function(resolve, reject) {
+	setTimeout(() => resolve("done!"), 1000);
+});
+  
+  // resolve runs the first function in .then
+  promise.then(
+	result => alert(result), // shows "done!" after 1 second
+	error => alert(error) // doesn't run
+  );
+
+  /////
+  let promise = new Promise(function(resolve, reject) {
+	setTimeout(() => reject(new Error("Whoops!")), 1000);
+  });
+  
+  // reject runs the second function in .then
+  promise.then(
+	result => alert(result), // doesn't run
+	error => alert(error) // shows "Error: Whoops!" after 1 second
+  );
+
+  //catch
+  let promise = new Promise((resolve, reject) => {
+	setTimeout(() => reject(new Error("Whoops!")), 1000);
+  });
+  
+  // .catch(f) is the same as promise.then(null, f)
+  promise.catch(alert); // shows "Error: Whoops!" after 1 second
+
+  //finally
+  new Promise((resolve, reject) => {
+	/* do something that takes time, and then call resolve/reject */
+  })
+	// runs when the promise is settled, doesn't matter successfully or not
+	.finally(() => stop loading indicator)
+	.then(result => show result, err => show error)
+
+	new Promise((resolve, reject) => {
+		setTimeout(() => resolve("result"), 2000)
+	})
+
+	.finally(() => alert("Promise ready"))
+	.then(result => alert(result)); // <-- .then handles the result
