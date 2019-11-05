@@ -359,4 +359,18 @@ let promise = new Promise(function(resolve, reject) {
       error => alert(`Error: ${error.message}`)
      );
 
-    promise.then(script => alert('Another handler...'));
+	promise.then(script => alert('Another handler...'));
+	
+	//ASYNC AND AWAIT
+
+	async function getPersonsInfo(name) {
+		const people = await server.getPeople();
+		const person = people.find(person => { return person.name === name });
+		return person;
+	  }
+
+	//The async keyword
+	const yourAsyncFunction = async () => {
+		// do something asynchronously and return a promise
+		return result;
+	  }
