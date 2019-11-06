@@ -473,3 +473,53 @@ let promise = new Promise(function(resolve, reject) {
 	  }
 	  
 	  f(); 
+
+	  //Async class methods
+	  class Waiter {
+		async wait() {
+		  return await Promise.resolve(1);
+		}
+	  }
+	  
+	  new Waiter()
+		.wait()
+		.then(alert); // 1
+
+	//Error handling
+	async function f() {
+
+		try {
+		  let response = await fetch('http://no-such-url');
+		} catch(err) {
+		  alert(err); // TypeError: failed to fetch
+		}
+	  }
+	  
+	  f();
+	  
+	 //
+	 async function f() {
+     let response = await fetch('http://no-such-url');
+     }
+
+      // f() becomes a rejected promise
+	 f().catch(alert); // TypeError: failed to fetch // (*) 
+	 
+	 //*************/example
+	 async function loadJson(url) { 
+		let response = await fetch(url); 
+	  
+		if (response.status == 200) {
+		  let json = await response.json(); 
+		  return json;
+		}
+	  
+		throw new Error(response.status);
+	  }
+	  
+	  loadJson('no-such-user.json')
+		.catch(alert); // Error: 404 
+
+	////////////////
+	
+
