@@ -439,3 +439,37 @@ let promise = new Promise(function(resolve, reject) {
 	  }
 	  
 	  showAvatar();
+
+	  //*********************
+
+	  //await won’t work in the top-level code
+	  // syntax error in top-level code
+     let response = await fetch('/article/promise-chaining/user.json');
+	 let user = await response.json();
+	 
+	 //wrap it in a func
+	 (async () => {
+		let response = await fetch('/article/promise-chaining/user.json');
+		let user = await response.json();
+		...
+	  })();
+
+	 //await accepts “thenables”
+	 class Thenable {
+		constructor(num) {
+		  this.num = num;
+		}
+		then(resolve, reject) {
+		  alert(resolve);
+		  // resolve with this.num*2 after 1000ms
+		  setTimeout(() => resolve(this.num * 2), 1000); // (*)
+		}
+	  };
+	  
+	  async function f() {
+		// waits for 1 second, then result becomes 2
+		let result = await new Thenable(1);
+		alert(result);
+	  }
+	  
+	  f(); 
